@@ -1,0 +1,42 @@
+
+{% block content %}
+  <h1>Poll List</h1>
+
+  <form method="get">
+    {{ filter.form.as_p }}
+    <button type="submit">Search</button>
+  </form>
+
+  {% for poll in polls %}
+    <div>
+      <h2>{{ poll.title }}</h2>
+      <p>{{ poll.description }}</p>
+      <p>Publication Date: {{ poll.pub_date }}</p>
+      <p>End Date: {{ poll.end_date }}</p>
+      <p>Owner: {{ poll.owner.username }}</p>
+      <p>Active: {{ poll.is_active }}</p>
+    </div>
+    <br>
+  {% empty %}
+    <p>No polls found.</p>
+  {% endfor %}
+
+  <div class="pagination">
+    <span class="step-links">
+        {% if polls.has_previous %}
+            <a href="?page=1">&laquo; first</a>
+            <a href="?page={{ polls.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current-page">
+            Page {{ polls.number }} of {{ polls.paginator.num_pages }}.
+        </span>
+
+        {% if polls.has_next %}
+            <a href="?page={{ polls.next_page_number }}">next</a>
+            <a href="?page={{ polls.paginator.num_pages }}">last &raquo;</a>
+        {% endif %}
+    </span>
+  </div>
+
+{% endblock %}

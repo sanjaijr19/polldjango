@@ -1,0 +1,7 @@
+<h2>Choice</h2>
+<form method="post">
+    {% csrf_token %}
+    total number of votes <input type="number" name="count" value="{{count}}"> <br>
+    {{ form.as_p }}
+    <button type="submit">submit</button>
+</form>

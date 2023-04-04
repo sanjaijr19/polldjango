@@ -1,0 +1,13 @@
+
+
+{% block content %}
+  <h2>Create a new poll</h2>
+  <form method="post">
+    {% csrf_token %}
+    {{ poll_form.as_p }}
+    {% for choice_form in choice_forms %}
+      {{ choice_form.as_p }}
+    {% endfor %}
+    <button type="submit" class="btn btn-primary">Create poll</button>
+  </form>
+{% endblock %}

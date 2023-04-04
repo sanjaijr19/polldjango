@@ -1,0 +1,33 @@
+
+
+
+<!DOCTYPE html>
+{% block content %}
+{% load static %}
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title> Update</title>
+</head>
+<body>
+<h1>
+  Update Poll
+</h1>
+
+<form method = 'POST' >
+
+
+       title <input type="text" name="title" value="{{poll_data.title}}"> <br>
+       description  <input type="text" name="description" Value="{{poll_data.description}}"> <br>
+       pub_date   <input type="datetime-local" name="pub_date" Value="{{poll_data.pub_date}}"> <br>
+       end_date      <input type="datetime-local" name="end_date" Value="{{poll_data.end_date}}"> <br>
+
+       {% csrf_token %}
+     <input type='submit' value="Update">
+
+    <a href="delete/{{poll_data.id}}/"> Delete </a>
+
+</form>
+{% endblock %}
+</body>
