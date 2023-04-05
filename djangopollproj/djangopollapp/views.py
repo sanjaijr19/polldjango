@@ -38,13 +38,15 @@ def PollView(request):
 
 def ChoiceView(request):
     count = Choice.objects.all().count()
+    message = None
     print(count)
     if request.method == 'POST':
         form = ChoiceForm(request.POST)
         if form.is_valid():
             print(request.user)
             if Choice.objects.filter(user=request.user).exists():
-                return HttpResponse("User already voted")
+                # message = "User already voted"
+                return HttpResponse('exists')
             current_time = timezone.now()
             print(current_time)
             poll = form.cleaned_data.get('poll')
@@ -54,10 +56,11 @@ def ChoiceView(request):
             poll = form.save(commit=False)
             poll.save()
             Choice.objects.update(user=request.user)
-            return HttpResponse("choices created")
+            message = "Choices created"
     else:
         form = ChoiceForm()
-    return render(request, 'choice.html', {'form': form,'count':count})
+        message = None
+    return render(request, 'choice.html', {'form': form,'count':count,'message':message})
 
 def Count(request):
     count = Choice.objects.all().count()
@@ -68,7 +71,7 @@ def Count(request):
 
 def PollViewall(request):
     poll_data = Poll.objects.all()
-    paginator = Paginator(poll_data, 2)  # show 10 polls per page
+    paginator = Paginator(poll_data, 2)
     page_number = request.GET.get('page')
     poll_data = paginator.get_page(page_number)
     return render(request,'pollall.html',{'poll_data':poll_data})
